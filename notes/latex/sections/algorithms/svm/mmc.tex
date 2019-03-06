@@ -1,0 +1,23 @@
+\subsection{Maximal Margin Classifier}
+
+In general, if the data is separable (if a hyperplane that separates the dataset can be found) then there will be an infinite number of hyperplanes formed by shifting or rotating the hyperplane by infinitesimal amounts. There therefore needs to be a way to decide which hyperplane is the best - the maximal margin classifier.
+
+The MMC, otherwise known as a \textbf{optimal separating hyperplane}, is the hyperplane which maximizes the margin, where \textbf{margin} refers to the minimum perpendicular distance over all points to the plane.
+
+The MMC operates exactly as described in the hyperplane section. It only adds rules as to what hyperplane is regarded as optimal.
+
+The location of the margin defines a set of \textbf{support vectors}. These are $p$ dimensional vectors which 'support' the margin in that they lie on the margin boundaries and if they were to move, the margin would change. They therefore support the margin by defining its location. In fact, the hyperplane can be found using only the support vectors - hyperplane methods in general place no weight whatsoever on data points that are not on (or within) the margin.
+
+\subsubsection{Constructing the MMC}
+
+For some data points $x_{1},...,x_{n}\in \mathbb{R}^{p}$ and class labels $y_{1},...,y_{n}\in\{-1,1\}$, solving for the MMC hyperplane is an optimisation problem:
+
+\begin{align*}
+    &\text{maximize}_{\beta_{i},M}\: M \\
+    &\text{subject to}\: \sum_{j=1}^{p}\beta_{j}^{2}=1 \\
+    &y_{i}H(x_{i}) \ge M\: \forall i=1,...,n
+\end{align*}
+
+Here, $M$ is actually the margin of the MMC. This is because the second equation means that $y_{i}H(x_{i})$ is the perpendicular distance of observation $x_{i}$ from the hyperplane and equation 3 requires this quantity to be at least $M$. Thus, we define all points to be on the correct side of the hyperplane at least $M$ away from the hyperplane, and our margin is defined to be the minimum distance of any given point from the hyperplane, i.e. $M$. This is indeed the MMC since we are maximizing $M$.
+
+The MMC is not without its flaws however. In the more realistic case where a linear boundary cannot be found to separate all the points (the \textbf{non-separable case}), no solution exists.

@@ -1,0 +1,35 @@
+\subsection{Logistic Regression}
+
+Logistic regression models the probability that a the response belongs to a particular category given the predictors, $P(class|predictors)$ for $n$ classes. Following the Bayes classifier you can then either assign the response to the class $i$ for which $P(class=i|predictors)$ is highest or for binary problems define a threshold for class membership, i.e. when $P(class=true|predictor) > threshold$.
+
+The key to predicting probabilities is to ensure a result between $[0,1]$ (or between any fixed boundary which can be mapped). For logistic regression we use a \textbf{logistic function} to achieve this:
+
+$$ P(Y=1|X) = p(X) = \frac{e^{\beta_{0}+\beta_{1}X}}{1+e^{\beta_{0}+\beta_{1}X}} $$
+
+Where, in general, a logistic function is:
+
+$$ f(x) = \frac{L}{1+e^{-k(x-x_{0})}} $$
+
+Where $L$ is the maximum value, $x_{0}$ is the y-axis midpoint and $k$ is a parameter (curve steepness). We can see that $\beta_{1} = -k$ and $\beta_{0} = kx_{0}$. The logistic function produces an S-shaped curve bounded between $0$ and $L$.
+
+We can rearrange $p(X)$ to produce
+
+$$ \frac{p(X)}{1-p(X)} = e^{\beta_{0}+\beta_{1}X} $$
+
+Where the left hand side is known as the \textbf{odds} and can take any value between 0 and $\infty$. We can also take the logarithm of both sides to produce a \textbf{logit} or \textbf{log-odds}:
+
+$$ log \left( \frac{p(X)}{1-p(X)} \right) = \beta_{0}+\beta_{1}X $$
+
+Where the left hand side is our logit.
+
+Our job is to then estimate the coefficients $\beta$ for which we will use \textbf{maximum likelihood}. Maximum likelihood works by setting parameters such that the predicted class (given class probabilities) best matches the true class. The \textbf{likelihood function} that we wish to maximize is:
+
+$$ l(\beta_{0},\beta_{1}) = \prod_{i:y_{i} = 1} p(x_{i}) \prod_{i':y_{i'} = 0} (1 - p(x_{i'})) $$
+
+Maximization of this would proceed by differentiating with respect to each parameter and setting equal to 0. Additionally, the likelihood function can be manipulated to make it easier to manage, for example by taking the logarithm and turning the products in to sums. Predicted values can be analysed in much the same way as linear regression, primarily with a standard error calculation and computing the z-statistic.
+
+Logistic regression can also be extended in two areas: multiple logistic regression where there are multiple predictors ($X=(x_{1},...,x_{n})$) and logistic regression for $>2$ response classes. The former extension is a simple matter of modifying $p(X)$ to be:
+
+$$ p(X) = \frac{e^{\beta_{0}+\beta_{1}X_{1} + ... + \beta_{n}X_{n}}}{1+e^{\beta_{0}+\beta_{1}X_{1} + ... + \beta_{n}X_{n}}} $$
+
+And using this modified $p(X)$ with maximum likelihood optimisation as before. Extending to multiple response classes is a more difficult task and instead of using logistic regression for this (which can be done) you would tend to use \textbf{linear discriminant analysis} instead.

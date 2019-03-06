@@ -1,0 +1,43 @@
+\subsection{Least Squares Regression}
+
+Linear regression is a parametric algorithm where we construct an equation as so for $n$ predictors:
+
+$$ \hat{y} = \hat{\beta}_{0} + \hat{\beta}_{1}x_{1} + ... + \hat{\beta}_{n}x_{n} $$
+
+Where our task is to learn all $\hat{\beta}$s.
+
+In order to find the optimal value for these we need to define a measure of error, the \textbf{residual sum of squares (RSS)}:
+
+$$ RSS = e_{1}^{2} + e_{2}^{2} + ... + e_{n}^{2} $$
+
+Where $e_{i}^{2} = (y_{i} - \hat{y}_{i})^{2} = (y_{i} - \hat{\beta}_{0} - \hat{\beta}_{1}x_{i})^{2}$ and is known as the \textbf{$i^{th}$ residual}. Note, the $RSS$ is the mean squared error ($MSE$) without the normalizing ($\frac{1}{n}$) factor.
+
+We can then derive an optimisation equation for all $\hat{\beta}$s by differentiating the $RSS$ with respect to each individual $\hat{\beta}$ and setting equal to 0. We find that our first $\hat{\beta}$ will be a function of only $x$ and $y$ and subsequent $\hat{\beta}$s will be a function of $x$, $y$ and previously calculated $\hat{\beta}$s which allows us to sequentially solve for all parameters. For a simple regression case where we only have one predictor, we find:
+
+$$ \hat{\beta}_{1} = \frac{\sum_{i=1}^{n} (x_{i} - \bar{x})(y_{i} - \bar{y})}{\sum_{i=1}^{n} (x_{i} - \bar{x})^{2}} $$
+$$ \hat{\beta}_{0} = \bar{y} - \hat{\beta}_{1}\bar{x} $$
+
+Where $\bar{x}$ means the average value of $x$ (the sample means). The RSS and the update equations can be trivially extended to multiple ($n>1$) predictors if we need to.
+
+The quality of a linear regression fit is usually assessed with the \textbf{residual standard error (RSE)} and the $R^{2}$ statistic.
+
+Linear regression works natively with quantitative data but can be made to work with qualitative data also with an encoding scheme. For 3 predictors you need 2 'dummy variables' where, for example, you set $x_{1}$ = -1 and $x_{2}$ = 1, while $x_{0}$ is represented as the absence of the other two. From this you could read a learned model as the difference from the baseline (the missing variable): $\beta_{1}$ is the difference between $x_{1}$ and $x_{0}$ and so on.
+
+\subsubsection{Assumptions Of The Linear Model}
+
+The linear model makes two assumptions, the \textbf{additive} and \textbf{linear} assumptions. The additive assumption states that the effect a predictor $X_{j}$ has on response $Y$ is independent of the values of all other predictors $X_{\neq j}$. The linear assumption states that a one-unit change in $X_{j}$ leads to the same change in $Y$ ($\pm \beta_{j}$) regardless of the current value of $X_{j}$. If at all possible, we would like to relax these assumptions to make our model more robust.
+
+\textbf{Relaxing The Additive Assumption:} The additive assumption can be relaxed by encoding for (and thus removing) interaction/synergy between predictors, or in other words, dependency. This can be achieved by adding a new parameter that encodes the joint relationship, $\beta_{3}x_{1}x_{2}$. We would then have a model such as $Y = \beta_{0} + \beta_{1}X_{1} + \beta_{2}X_{2} + \beta_{3}X_{1}X_{2} + \epsilon$ which can be rewritten as $Y = \beta_{0} + \widetilde{\beta}_{1}X_{1} + \beta_{2}X_{2} + \epsilon$ where $\widetilde{\beta}_{1} = \beta_{1} + \beta_{3}X_{2}$. With this, we have now dealt with the interaction between predictors and thus relaxed the additive assumption. The \textbf{hierarchical principle} states that if we are going to include the interaction term (if it is statistically significant) we should also include the 'main effects' - the base predictors that are interacting, even if they are not statistically relevant.
+
+\textbf{Relaxing The Linear Assumption:} The linear assumption can't be directly removed (obviously, or it wouldn't be linear regression) but it can be manipulated to allow for expression of non-linear relationships. Using \textbf{polynomial regression} we can express non-linear relationships in a linear framework: we can add extra parameter-predictor pairs to the model, modifying the predictor with some non-linear function, e.g. we could add $\beta_{j}x_{i}^2$, $\beta_{j}\sqrt{x_{i}}$, and so on. This is still linear but allows us to incorporate non-linearities. This is trivially extended to multiple linear regression and can even be used with interaction terms, possibly even with non-linear interaction terms, although it gets intractably complicated quite fast.
+
+\subsubsection{Potential Problems}
+
+\begin{itemize}
+    \item \textbf{Non-linearity of the response-predictor relationship:} If there is a complex non-linear relationship then there is nothing we can realistically do to fix our linear model (short of making it non-linear). The task is instead to identify that this is the case. We can use a \textbf{residual plot} to identify a non-linearity, checking for patterns or anything that would suggest that the residuals are not randomly distributed.
+    \item \textbf{Correlation of error terms:} If error terms are correlated then the standard error we calculate tends to underestimate the true standard error. This means that our confidence and prediction intervals are narrower than they should be (they actually represent less \% than the X\% interval they are intended to represent) along with the p-values which are smaller than they should be, perhaps leading us to erroneously conclude that a parameter is statistically significant. This is most prevalent in time series data where nearby residuals may have similar values, known as \textbf{tracking}.
+    \item \textbf{Non-constant variance of error terms:} Once again, standard errors, hypothesis tests and confidence intervals rely on a constant variance, $Var(e_{i}) = \sigma^{2}$. It can be easy to diagnose this problem by looking at a \textbf{residual plot} and looking for a funnel shape which would imply \textbf{heteroscedasticity} (a funnel shape suggests that variability increases/decreases as you cycle across the $\hat{Y}$ domain). One solution is a transformation of the response $Y$ to counteract the shape: $log(Y)$ or $\sqrt{Y}$ are common transformations. It could also be the case that we know the variance of each response and we can therefore perform the regression weighted by the inverse variance to counteract the funnel.
+    \item \textbf{Outliers:} Outliers don't tend to have a large effect on the regression itself but do have a noticeable effect on our performance metrics. Spotting outliers is usually just a case of plotting the graph (or residual graph) and spotting them by hand. This is subjective of course and instead we can plot the \textbf{studentized residuals} which should allow us to better spot outliers.
+    \item \textbf{High Leverage Points:} High leverage points are similar to outliers but where outliers are outliers in the response, high leverage points are outliers in the predictors. That is to say, high leverage points have an unusual combination of predictor values even if the resultant response is normal - if $X_{1}$ and $X_{2}$ are positively correlated then it would not be surprising to see a (relatively) large $x_{1}$ with a large $x_{2}$, but it would be surprising (and thus a high leverage point) to see a large $x_{1}$ with a small $x_{2}$ or vice versa. We can use a \textbf{leverage statistic} to identify these high leverage points.
+    \item \textbf{Collinearity:} Collinearity is the linear correlation of two predictors. It reduces the accuracy of parameter estimates and causes their standard error to grow and thus a decline in the t-statistic. Diagnosing collinearity can sometimes be a case of just looking at a correlation matrix and identifying correlated predictors, either including a interaction term/combining the offending predictors in to a single new predictor or removing one of the predictors if it is deemed redundant. However if multiple predictors ($>2$) are collinear with each other we have a case of \textbf{multi-collinearity} which may not necessarily be seen in a first-order correlation matrix. It would be possible to generate a second-order correlation matrix (looking at correlations of predictor pairs with other predictors/pairs) but it quickly becomes unfeasible especially if the correlation is hidden in third, fourth, etc order graphs. Instead we can compute the \textbf{variance inflation factor (VIF)} to diagnose collinearity.
+\end{itemize}

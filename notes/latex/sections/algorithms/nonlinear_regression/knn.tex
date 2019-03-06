@@ -1,0 +1,9 @@
+\subsection{K-Nearest Neighbours}
+
+A non-parametric approach to estimate $f(X)$ using:
+
+$$ \hat{f(x_{0})} = \frac{1}{K} \sum_{x_{i}\in \mathcal{N}_{0}} y_{i} $$
+
+Which is read as $\hat{y}_{0}$ is equal to the sum of the $K$ nearest $Y$ values (calculated from the $K$ nearest $X$ values) around $x_{0}$ divided by $\frac{1}{K}$.
+
+There exists the \textbf{curse of dimensionality} which is especially prevalent in K-NN as, for example, with 100 data points and 20 predictors, the closest point to any $X$ point may actually be quite far away in the 20 $p$ dimensions (if we think of volume, its not 100 split between 20, its more like 100 split between $\propto r^{20}$).

@@ -1,0 +1,94 @@
+\BOOKMARK [0][-]{chapter.2}{1 Background Information}{}% 1
+\BOOKMARK [1][-]{section.3}{1.1 Definitions}{chapter.2}% 2
+\BOOKMARK [1][-]{section.4}{1.2 Equations}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.5}{1.2.1 Mean \(Expectation\)}{section.4}% 4
+\BOOKMARK [2][-]{subsection.6}{1.2.2 Variance}{section.4}% 5
+\BOOKMARK [2][-]{subsection.7}{1.2.3 Covariance}{section.4}% 6
+\BOOKMARK [2][-]{subsection.8}{1.2.4 Correlation}{section.4}% 7
+\BOOKMARK [2][-]{subsection.9}{1.2.5 Bayes' Theorem}{section.4}% 8
+\BOOKMARK [0][-]{chapter.10}{2 Definitions}{}% 9
+\BOOKMARK [1][-]{section.11}{2.1 General}{chapter.10}% 10
+\BOOKMARK [0][-]{chapter.12}{3 Algorithms}{}% 11
+\BOOKMARK [1][-]{section.13}{3.1 Dimensionality Reduction}{chapter.12}% 12
+\BOOKMARK [2][-]{subsection.14}{3.1.1 Principal Component Analysis}{section.13}% 13
+\BOOKMARK [3][-]{section*.15}{How Much Variance Does Each PC Explain}{subsection.14}% 14
+\BOOKMARK [1][-]{section.16}{3.2 Linear Regression}{chapter.12}% 15
+\BOOKMARK [2][-]{subsection.17}{3.2.1 Least Squares Regression}{section.16}% 16
+\BOOKMARK [3][-]{section*.18}{Assumptions Of The Linear Model}{subsection.17}% 17
+\BOOKMARK [3][-]{section*.19}{Potential Problems}{subsection.17}% 18
+\BOOKMARK [2][-]{subsection.20}{3.2.2 Subset Selection}{section.16}% 19
+\BOOKMARK [3][-]{section*.21}{Best Subset Selection}{subsection.20}% 20
+\BOOKMARK [3][-]{section*.22}{Forward Stepwise Selection}{subsection.20}% 21
+\BOOKMARK [3][-]{section*.23}{Backward Stepwise Selection}{subsection.20}% 22
+\BOOKMARK [3][-]{section*.24}{Hybrid Stepwise Selection}{subsection.20}% 23
+\BOOKMARK [2][-]{subsection.25}{3.2.3 Shrinkage \(Lasso/Ridge\)}{section.16}% 24
+\BOOKMARK [3][-]{section*.26}{Ridge Regression}{subsection.25}% 25
+\BOOKMARK [3][-]{section*.27}{The Lasso}{subsection.25}% 26
+\BOOKMARK [2][-]{subsection.28}{3.2.4 Dimensionality Reduction}{section.16}% 27
+\BOOKMARK [3][-]{section*.29}{Principal Component Regression}{subsection.28}% 28
+\BOOKMARK [1][-]{section.30}{3.3 Non-linear Regression}{chapter.12}% 29
+\BOOKMARK [2][-]{subsection.31}{3.3.1 Basis Functions}{section.30}% 30
+\BOOKMARK [2][-]{subsection.32}{3.3.2 K-Nearest Neighbours}{section.30}% 31
+\BOOKMARK [2][-]{subsection.33}{3.3.3 Polynomial Regression}{section.30}% 32
+\BOOKMARK [2][-]{subsection.34}{3.3.4 Step Functions}{section.30}% 33
+\BOOKMARK [2][-]{subsection.35}{3.3.5 Regression Splines}{section.30}% 34
+\BOOKMARK [2][-]{subsection.37}{3.3.6 Smoothing Splines}{section.30}% 35
+\BOOKMARK [2][-]{subsection.38}{3.3.7 Local Regression}{section.30}% 36
+\BOOKMARK [2][-]{subsection.39}{3.3.8 Generalized Additive Models}{section.30}% 37
+\BOOKMARK [1][-]{section.40}{3.4 Classification}{chapter.12}% 38
+\BOOKMARK [2][-]{subsection.41}{3.4.1 The Bayes Classifier}{section.40}% 39
+\BOOKMARK [2][-]{subsection.42}{3.4.2 K-Nearest Neighbour Classifier}{section.40}% 40
+\BOOKMARK [2][-]{subsection.43}{3.4.3 Logistic Regression}{section.40}% 41
+\BOOKMARK [2][-]{subsection.44}{3.4.4 Linear Discriminant Analysis \(LDA\)}{section.40}% 42
+\BOOKMARK [2][-]{subsection.45}{3.4.5 Quadratic Discriminant Analysis \(QDA\)}{section.40}% 43
+\BOOKMARK [2][-]{subsection.46}{3.4.6 Decision Trees}{section.40}% 44
+\BOOKMARK [1][-]{section.47}{3.5 Tree-based Methods \(Class/Reg\)}{chapter.12}% 45
+\BOOKMARK [2][-]{subsection.48}{3.5.1 Decision Trees}{section.47}% 46
+\BOOKMARK [3][-]{section*.49}{Pruning}{subsection.48}% 47
+\BOOKMARK [2][-]{subsection.50}{3.5.2 Bagging}{section.47}% 48
+\BOOKMARK [2][-]{subsection.51}{3.5.3 Random Forest}{section.47}% 49
+\BOOKMARK [2][-]{subsection.52}{3.5.4 Boosting}{section.47}% 50
+\BOOKMARK [1][-]{section.53}{3.6 Support Vector Machines \(Class\)}{chapter.12}% 51
+\BOOKMARK [2][-]{subsection.54}{3.6.1 Hyperplanes}{section.53}% 52
+\BOOKMARK [2][-]{subsection.55}{3.6.2 Maximal Margin Classifier}{section.53}% 53
+\BOOKMARK [3][-]{section*.56}{Constructing the MMC}{subsection.55}% 54
+\BOOKMARK [2][-]{subsection.57}{3.6.3 Support Vector Classifier}{section.53}% 55
+\BOOKMARK [2][-]{subsection.58}{3.6.4 Support Vector Machines}{section.53}% 56
+\BOOKMARK [3][-]{section*.59}{SVMs For More Than Two Classes}{subsection.58}% 57
+\BOOKMARK [1][-]{section.60}{3.7 Clustering}{chapter.12}% 58
+\BOOKMARK [2][-]{subsection.61}{3.7.1 K-Means Clustering}{section.60}% 59
+\BOOKMARK [2][-]{subsection.62}{3.7.2 Hierarchical Clustering}{section.60}% 60
+\BOOKMARK [0][-]{chapter.63}{4 Assessing Performance}{}% 61
+\BOOKMARK [1][-]{section.64}{4.1 Measures}{chapter.63}% 62
+\BOOKMARK [2][-]{subsection.65}{4.1.1 Statistical Errors}{section.64}% 63
+\BOOKMARK [3][-]{section*.66}{Standard Error}{subsection.65}% 64
+\BOOKMARK [3][-]{section*.67}{Residual Standard Error}{subsection.65}% 65
+\BOOKMARK [3][-]{section*.68}{Confidence Intervals}{subsection.65}% 66
+\BOOKMARK [3][-]{section*.69}{Prediction Intervals}{subsection.65}% 67
+\BOOKMARK [3][-]{section*.70}{Hypothesis Testing}{subsection.65}% 68
+\BOOKMARK [3][-]{section*.71}{T-Statistic and P-Value}{subsection.65}% 69
+\BOOKMARK [3][-]{section*.72}{Total Sum of Squares \(TSS\)}{subsection.65}% 70
+\BOOKMARK [3][-]{section*.73}{R2 Statistic}{subsection.65}% 71
+\BOOKMARK [3][-]{section*.74}{F-Statistic}{subsection.65}% 72
+\BOOKMARK [2][-]{subsection.75}{4.1.2 Response Errors}{section.64}% 73
+\BOOKMARK [3][-]{section*.76}{Residual Sum of Squares \(RSS\)}{subsection.75}% 74
+\BOOKMARK [3][-]{section*.77}{Mean Squared Error}{subsection.75}% 75
+\BOOKMARK [3][-]{section*.78}{Brier Score}{subsection.75}% 76
+\BOOKMARK [1][-]{section.79}{4.2 Diagnosing Performance}{chapter.63}% 77
+\BOOKMARK [2][-]{subsection.80}{4.2.1 The Loss/Flexibility Plot}{section.79}% 78
+\BOOKMARK [2][-]{subsection.81}{4.2.2 Determining Over/Under Fitting}{section.79}% 79
+\BOOKMARK [2][-]{subsection.82}{4.2.3 Residual Plots}{section.79}% 80
+\BOOKMARK [3][-]{section*.83}{Studentized Residual Plots}{subsection.82}% 81
+\BOOKMARK [2][-]{subsection.84}{4.2.4 The Leverage Statistic}{section.79}% 82
+\BOOKMARK [2][-]{subsection.85}{4.2.5 The Variance Inflation Factor \(VIF\)}{section.79}% 83
+\BOOKMARK [2][-]{subsection.86}{4.2.6 Confusion Matrix}{section.79}% 84
+\BOOKMARK [2][-]{subsection.87}{4.2.7 AUC/ROC Curves}{section.79}% 85
+\BOOKMARK [1][-]{section.88}{4.3 Re-sampling Methods}{chapter.63}% 86
+\BOOKMARK [2][-]{subsection.89}{4.3.1 Cross-Validation}{section.88}% 87
+\BOOKMARK [3][-]{section*.90}{k-fold Cross-Validation}{subsection.89}% 88
+\BOOKMARK [2][-]{subsection.91}{4.3.2 Bootstrap}{section.88}% 89
+\BOOKMARK [1][-]{section.92}{4.4 Estimating Test-Set Error}{chapter.63}% 90
+\BOOKMARK [2][-]{subsection.93}{4.4.1 Cp}{section.92}% 91
+\BOOKMARK [2][-]{subsection.94}{4.4.2 Akaike Information Criterion \(AIC\)}{section.92}% 92
+\BOOKMARK [2][-]{subsection.95}{4.4.3 Bayesian Information Criterion \(BIC\)}{section.92}% 93
+\BOOKMARK [2][-]{subsection.96}{4.4.4 Adjusted R2}{section.92}% 94

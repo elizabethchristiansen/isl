@@ -1,0 +1,19 @@
+\subsection{Decision Trees}
+
+Note: See the \textbf{tree based methods} section for advanced methods for tree based methods, which can be applied to the following discussion. This section only considers modifications required for classification.
+
+Much the same as with regression, classification tree building requires that we provide some measure of error. This is used at each decision point to work out the optimal regions. Naively one would use the \textbf{most commonly occurring class} in place of the average response in the regression RSS or more specifically, we would define the error as the proportion of observations which are \textit{not} members of the most commonly occurring class in that region, known as \textbf{classification error}. As it turns out, this is not a sensitive enough measure to properly build the tree.
+
+Instead, tree building is done using two other measures. The \textbf{Gini index}:
+
+$$ G=\sum^{K}_{k=1}\hat{p}_{mk}(1-\hat{p}_{mk}) $$
+
+Where $\hat{p}_{mk}$ represents the proportion of training observations in the $m$th region belonging to the $k$th class. The Gini index is a measure of total variance across the $K$ classes. The Gini index would be small for regions where the vast majority of observations are dominated by one class ($\hat{p}_{mk}$ for all classes that are not the majority class are equal to 0 or 1) and is therefore regarded as a measure of \textit{purity}.
+
+Alternatively, one can use \textbf{entropy}:
+
+$$ S = -\sum^{K}_{k=1}\hat{p}_{mk}log(\hat{p}_{mk}) $$
+
+Entropy will also be small if most $\hat{p}_{mk}$s are 0 or 1. In fact, Gini and entropy measures are numerically very similar, although their mathematical justification differ.
+
+When building a tree you would generally use Gini or entropy. When pruning a tree however the first option, classification error, tends to perform better if the accuracy of the pruned tree is your primary concern. Although for pruning any of the three will work.

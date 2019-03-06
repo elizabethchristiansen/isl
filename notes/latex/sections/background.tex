@@ -1,0 +1,42 @@
+\section{Definitions}
+
+\textbf{Monotonic Function:} A function whose range is entirely non-decreasing or non-increasing over its domain. It has no global or local minima or maxima anywhere in the range except for at the start and end of the domain. A monotonic function's first derivative will not change sign over the domain.
+
+\section{Equations}
+
+\subsection{Mean (Expectation)}
+
+$$ E[X] = \mu $$
+
+For a discrete data set $X$:
+
+$$ E[X] = \frac{1}{n} \sum_{i=1}^{n} x_{i} $$
+
+\subsection{Variance} 
+
+Variance is defined as the expected value of the squared deviation from the mean and is a measure of the spread of the data about the mean.
+
+$$ Var(X) = \sigma^{2} $$
+$$ Var(X) = cov(X,X) $$
+$$ Var(X) = E[(X-E[X])^{2}] = E[X^{2}] - E[X]^2 $$
+
+\subsection{Covariance}
+
+Covariance is a generalization of variance between any two random variables.
+
+$$ cov(X,Y) = E[(X-E[X])(Y-E[Y])] = E[XY] - E[X]E[Y] $$
+
+\subsection{Correlation}
+
+Correlation (in this case, Pearson's product-moment correlation) is just a normalized covariance measure and measures how related two variables are.
+
+$$ corr(X,Y) = \rho_{X,Y} $$
+$$ corr(X,Y) = \frac{cov(X,Y)}{\sigma_{X}\sigma_{Y}} $$
+
+\subsection{Bayes' Theorem}
+
+Bayes' theorem is a conditional distribution theorem that states, for $A=(a_{1},...,a_{p})$ and $B=(b_{1},...,b_{q})$:
+
+$$ P(A|B) = \frac{P(A)P(B|A)}{P(B)} $$
+
+Where $P(A|B)$ is our \textbf{posterior}, $\frac{P(B|A)}{P(B)}$ is our \textbf{evidence} or the 'support $B$ provides for $A$' and $P(A)$ is our \textbf{prior}.

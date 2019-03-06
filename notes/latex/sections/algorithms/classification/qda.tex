@@ -1,0 +1,9 @@
+\subsection{Quadratic Discriminant Analysis (QDA)}
+
+\textbf{Quadratic Discriminant Analysis} is similar to LDA but extends it to relax the assumption that all classes share a common covariance matrix. Specifically, QDA follows the exact same process as multi-predictor ($p>1$) LDA but with each class having its own covariance matrix. The \textit{quadratic} part comes arises from the discriminant function taking on a quadratic form as opposed to the linear discriminant function in LDA. QDA assumes that observations from the $k$th class is of the form $X\sim N(\mu_{k},\matr{\Sigma}_{k})$. The discriminant function is then (following the same derivation as LDA):
+
+$$ \delta_{k}(x) = -\frac{1}{2} (x-\mu_{k})^{T}\Sigma_{k}^{-1}(x-\mu_{k}) -\frac{1}{2} log|\Sigma_{k}| + log\pi_{k} $$
+
+Upon simplifying this equation we find a term $x^{T}\matr{\Sigma}^{-1}_{k}x$. Unlike the LDA case, this is now dependent on $k$ and will be different between classes. We cannot eliminate it and therefore we introduce a quadratic term in $x$, hence \textit{quadratic} in QDA.
+
+QDA introduces a considerable number of parameters over LDA and thus is a more flexible model, at the expense of increased variance (but reduced bias) and complexity.

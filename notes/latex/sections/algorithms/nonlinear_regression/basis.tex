@@ -1,0 +1,13 @@
+\subsection{Basis Functions}
+
+Basis functions are the more generalized form for many non-linear regression approaches. Essentially they take the standard linear regression form:
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{i} + \eta_{i} $$
+
+And replace the $x_{i}$ with a \textbf{basis function}:
+
+$$ y_{i} = \beta_{0} + \beta_{1}b_{1}(x_{i}) + ... + \beta_{K}b_{K}(x_{i}) + \eta_{i} $$
+
+Where we can see that, for simple linear regression, $K=1$ and $b_{1}(x_{i})=x_{i}$. For polynomial regression we may have, for example, $b_{k}(x_{i}) = x_{i}^{k}$. As this still resembles a linear regression problem, all our tools are still available: training algorithm, error measures and so on.
+
+Selecting $b_{k}(x_{i})$ functions is entirely up to the user and many different basis functions exist.

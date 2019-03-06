@@ -1,0 +1,22 @@
+\documentclass[a4paper,12pt,twoside]{report}
+
+\input{includes/commands}
+\input{includes/includes}
+
+\begin{document}
+    \tableofcontents
+    \newpage
+
+	\chapter{Background Information}
+        \input{sections/background.tex}
+
+	\chapter{Definitions}
+        \section{General}
+            \input{sections/definitions.tex}
+
+	\chapter{Algorithms}
+        \input{sections/algorithms/algorithms.tex}
+
+    \chapter{Assessing Performance}
+        \input{sections/performance.tex}
+\end{document}

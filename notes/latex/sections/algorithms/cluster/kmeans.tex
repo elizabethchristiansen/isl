@@ -1,0 +1,24 @@
+\subsection{K-Means Clustering}
+
+K-means clustering involves first defining the desired number of subgroups, $K$. A good clustering is defined as the clustering for which the \textbf{within-cluster variation} is as small as possible, or in other words, the amount by which observations in each cluster differ from each other is minimized across all clusters:
+
+$$ \text{minimize}_{C_{K}} \left\{ \sum_{k=1}^{K}W(C_{k}) \right\} $$
+
+Where $C_{k}$ is the $k$th cluster and $W(C_{k})$ is a measure of how much observations within that cluster differ from each other.
+
+$W(C_{k})$ can be defined by the user. A popular choice is \textbf{squared Euclidean distance}:
+
+$$ W(C_{k}) = \frac{1}{|C_{k}|}\sum_{i,i'\in C_{k}}\sum_{j=1}^{p}(x_{ij}-x_{i'j})^{2} $$
+
+In general however, this is a computationally intractable problem. Instead, we use an approximate algorithm that gives decent results:
+
+\begin{itemize}
+    \item Randomly assign all observations to one of the subgroups $1,...,K$.
+    \item Iterate until all cluster alignments stop changing:
+    \begin{itemize}
+        \item For each of the $K$ clusters, compute the cluster centroid - the mean of the $p$ features within that cluster.
+        \item Assign each observation to the cluster with the closest centroid to that observation.
+    \end{itemize}
+\end{itemize}
+
+The algorithm is guaranteed to decrease to a local optimum however this is not guaranteed to be the global optimum - k-means clustering is dependent on the initial randomization step to produce good (best) results! One can run the algorithm many times and select the result that has the lowest within-cluster variation over all runs. Another problem is selecting $K$. Once again, because its an unsupervised method there in general isn't an objective way to select the correct $K$. It could be domain dependent or could even require eyeballing the resultant clusters.

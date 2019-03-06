@@ -1,0 +1,13 @@
+\subsection{Local Regression}
+
+Local regression involves computing a weighted regression line at each target point $x_{0}$ using some chosen number of nearby points.
+
+Performing local regression requires the selection of regression type (constant, linear, polynomial), the number of nearby points (span, $s$) and the weighting function. The weighting function can be any function, but generally is set such that being closer in Euclidean distance means having a higher weight, with the closest point having the largest weight and the furthest point (within the nearby points) having weight 0, and all other points outside of the nearby points having weight 0. For example, a simple weight function could be truncated Euclidean distance where any distance greater than the distance of the furthest point within the chosen points is set to zero and all others have weight set to their Euclidean distance.
+
+The process of local regression involves finding a regression line at each $x_{0}$ minimizing (for linear regression):
+
+$$ \sum^{n}_{i=1} K_{i0}(y_{i}-\beta_{0}-\beta_{1}x_{i})^{2} $$
+
+Where $K_{i0}=K(x_{i},x_{0})$ is a weight function for point $x_{i}$ relative to point $x_{0}$. 
+
+One can expand local regression, for example, in the case of multiple predictors $X_{1},...,X_{p}$ we could have a regression local in some predictors but global in others. Local regression scales with multiple predictors although as $p$ becomes large we have \textit{curse of dimensionality} problems.

@@ -1,0 +1,5 @@
+\subsection{Dimensionality Reduction}
+
+\subsubsection{Principal Component Regression}
+
+Principal component regression (PCR) works by using principal component analysis to build a regression model on the first $M$ principal components. The assumption is that the directions which show the most variation are the most associated with $Y$, that is to say, the first $Z$ predictors. PCR is not a feature selection method (like best-set or lasso) as it still uses all $X$ predictors, just some reduced linear combination of them. In this sense, it is more similar to ridge regression. When performing PCR it is a good idea to standardize predictors first so that scale does not play a role in selecting the principal components. $M$ is then selected with cross validation.

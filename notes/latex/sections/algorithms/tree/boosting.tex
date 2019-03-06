@@ -1,0 +1,16 @@
+\subsection{Boosting}
+
+Boosting is another technique to reduce the variance inherent in single trees. Boosting works by building trees sequentially with each tree using information from the previously grown tree. In particular, each new tree is grown using the residuals left over from previous trees which can be seen as each new tree is explaining whatever behaviour previous trees could not explain. This process is parametrised with $\lambda$, $d$ and $B$: the shrinkage parameter, $\lambda$, which controls the rate at which boosting learns; the number of splits, $d$, which is the maximum tree complexity; the total number of trees $B$.
+
+The algorithm is as follows:
+
+\begin{itemize}
+    \item Set all residuals $r_{i}=y_{i}$ and set $\hat{f}(x)=0$
+    \item For all $B$: 
+    \begin{itemize}
+        \item Fit a new tree $\hat{f}^{b}$ with $d$ splits using the data $(X,r)$
+        \item Update $\hat{f}(x)=\hat{f}(x)+\lambda\hat{f}^{b}(x)$
+        \item Update $r_{i}=r_{i}-\lambda\hat{f}^{b}(x_{i})$
+    \end{itemize}
+    \item Output the final model $\hat{f}(x) = \sum^{B}_{b=1}\lambda\hat{f}^{b}(x)$
+\end{itemize}

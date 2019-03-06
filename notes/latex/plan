@@ -1,0 +1,5 @@
+definitions: overfitting, underfitting, supervised learning, etc 
+    - examples/complete list e.g. a complete list of supervised/unsupervised learning techniques
+algorithms/methods: gradient descent, least squares optimisation, linear regression etc
+    - each should contain the mathematical formulation, the properties (parametric, supervised, etc), what it is useful for and where it should/should not be used and related methods. it should always refer back to the definitions (otherwise whats the point of knowing them!)
+accessing accuracy: cross validation, error functions (MSE etc), overfitting/underfitting etc

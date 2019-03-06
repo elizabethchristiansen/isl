@@ -1,0 +1,39 @@
+\subsection{Shrinkage (Lasso/Ridge)}
+
+Shrinkage methods also aim to reduce $p$ to the minimal optimal subset however unlike subset selection which explicitly removes predictors in a least squares model, shrinkage models modify the least squares optimization such that the optimization process itself leads to small or zero coefficients for certain predictors, otherwise known as \textbf{constrained} or \textbf{regularized} coefficients. For reference, the standard least squares update rule is to minimize:
+
+$$ RSS = \sum^{n}_{i=1} (y_{i}-\beta_{0} - \sum^{p}_{j=1}\beta_{j}x_{ij})^{2} $$
+
+Over all $\beta_{i}$.
+
+\subsubsection{Ridge Regression}
+
+Ridge regression modifies the least squares update rule to be:
+
+$$ RSS + \lambda \sum^{p}_{j=1}\beta_{j}^{2} $$
+
+Where $\lambda \ge 0$ is a \textbf{tuning parameter}. Ridge regression works by optimizing $\beta$s to best model the relationship, much like least squares, but to also penalize large $\beta$s and thus \textbf{shrinks} the coefficient estimates toward zero. The second term in the above equation is known as the \textbf{shrinkage penalty} and the level of shrinkage is determined by $\lambda$ which can be defined manually or an optimal value discovered with cross validation. This shrinkage penalty is also known as \textbf{$l_{2}$ regularization} which has the effect of penalizing large weights.
+
+It turns out that coefficients in least squares regression are \textbf{scale equivariant} - multiplying a predictors by $c$ has the effect of multiplying its coefficient by $\frac{1}{c}$. Ridge regression does not have this property. Changes in the scale of predictors can have large and unpredictable effects to the scale and value of coefficients. We therefore want to \textbf{standardize} the predictors:
+
+$$ \widetilde{x}_{ij} = \frac{x_{ij}}{\sqrt{\frac{1}{n}\sum^{n}_{i=1}(x_{ij}-\bar{x}_{j})^{2}}} $$
+
+Where the denominator is the estimated standard deviation of the $j$th predictor.
+
+In ridge regression, $\lambda$ acts as a way to modify model flexibility. By increasing $\lambda$ we reduce the flexibility of the model and thus reduce variance (but increase bias). This is stronger than the standard least squares model as a ridge regression still allows for a least squares model if that is optimal ($\lambda = 0$) but some problems won't need the flexibility of even least squares. As such, ridge regression tends to work in problems where least squares estimates have high variance which ridge regression can reduce at the expense of increased bias - a balance would have to be found (a search over $\lambda$).
+
+The alternate form for ridge is:
+
+$$ minimize_{\beta} \left( \sum^{n}_{i=1} (y_{i}-\beta_{0} - \sum^{p}_{j=1}\beta_{j}x_{ij})^{2} \right) \text{subject to} \lambda \sum^{p}_{j=1}\beta_{j}^{2} \leq s $$
+
+\subsubsection{The Lasso}
+
+Ridge regression does not solve the problem of some predictors being uncorrelated or having low information gain - all predictor coefficients tend toward zero in ridge as opposed to a select few. Ridge regression instead offers a variance reduction and prevents high-coefficient predictors dominating the other predictors. Lasso regression is very similar to ridge regression but instead of using $l_{2}$ regularization we use $l_{1}$:
+
+$$ RSS + \lambda \sum^{p}_{j=1}|\beta_{j}| $$
+
+The key difference here is $l_{1}$ tends to set small weights equal to zero whereas $l_{2}$ tends all weights towards zero (but usually doesn't equal zero). This can be understood geometrically as $l_{1}$ regularization creates (in 2-dimensions) a diamond (of size given by $\lambda$) which leads to a situation where the optimal value of the above equation (where both lines intersect) occurs at the vertices. These vertices have one of the variables equal to zero. $l_{2}$ on the other hand creates a circle (in 2-dimensions) which means the chance of intersecting where one or more variables is zero is low. This effect is easier to see by looking at the alternate form for ridge (above) and lasso:
+
+$$ minimize_{\beta} \left( \sum^{n}_{i=1} (y_{i}-\beta_{0} - \sum^{p}_{j=1}\beta_{j}x_{ij})^{2} \right) \text{subject to} \sum_{j=1}^{p}|\beta_{j}| \leq s $$
+
+Where we can imagine drawing a circle/diamond of radius $s$ and finding the closest point of intersection to the RSS minimum, which usually occurs at an axis (vertex) for $l_{1}$ and can occur anywhere for $l_{2}$.

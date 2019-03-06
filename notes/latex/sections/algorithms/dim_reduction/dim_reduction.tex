@@ -1,0 +1,13 @@
+Dimensionality reduction works by transforming the predictors $X$ in to a set of new predictors $Z$ where $|Z| \leq |X|$. For example, if we let $Z$ represent linear combinations of $X$, with $|X|=p$ and $|Z|=M$, $M<p$:
+
+$$ Z_{m} = \sum^{p}_{j=1}\phi_{jm}X_{j} $$
+
+With $\phi_{jm}$ being some matrix of constants. These can then be used in a linear regression problem:
+
+$$ y_{i} = \Theta_{0} + \sum^{M}_{m=1}\Theta_{m}z_{im} + \eta_{i} $$
+
+Where $z_{im}$ is the $i$th component of $Z_{m}$ and $\Theta$ are our new coefficients analogous to $\beta$ but for the $Z$ predictors. It can be shown that:
+
+$$ \beta_{j} = \sum^{M}_{m=1}\Theta_{m}\phi_{jm} $$
+
+Now, we have a regression problem with only $M$ predictors as opposed to the original $p$ predictors ($M<p$) which means we have a less flexible model, need less training data and can train faster. The problem of dimensionality reduction is then in selecting the correct $Z_{m}$s (selecting $\phi$).

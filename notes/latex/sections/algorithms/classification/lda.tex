@@ -1,0 +1,33 @@
+\subsection{Linear Discriminant Analysis (LDA)}
+
+Logistic regression works by assuming a form for $p(X) = P(Y|X)$ and setting the parameters to best model the data. Linear discriminant analysis (LDA) instead models the conditional distribution for predictors given class, $P(X|Y)$ and then uses Bayes' theorem to find $p(X)$. The net result is an equation for $P(Y|X)$:
+
+$$ p_{k}(X) = P(Y=k|X=x) = \frac{\pi_{k}f_{k}(x)}{\sum^{K}_{l=1} \pi_{l}f_{l}(x)} $$
+
+Where $\pi_{k}$ is our \textbf{prior} and represents the probability that an observation at random comes from class $k$ (i.e. the class distributions) and $f_{k}(x)$ is the density function of $X$ for an observation that comes from the $k$th class (i.e. given a class what are the likely $X$ values, equivalent to $P(X|Y)$). Usually we can estimate $\pi_{k}$ by calculating the proportion of class $k$ out of all classes in our training data. Estimating $f_{k}(X)$ is more difficult however and we have to assume a form for $f$.
+
+For the one dimensional case where we only have 1 predictor ($p=1$), we assume $f$ takes the form of a one dimensional \textbf{Gaussian}:
+
+$$ f_{k}(x) = \frac{1}{\sqrt{2\pi\sigma_{k}}} exp \left( -\frac{1}{2\sigma_{k}^{2}}(x-\mu_{k})^{2} \right) $$
+
+Where $\mu_{k}$ and $\sigma_{k}^{2}$ are the mean and variance parameters for the $k$th class (mean/variance of the single predictor $x$ for class $k$). We simplify this by assuming $\sigma_{k} = \sigma_{1} = ... = \sigma_{n}$ which we denote $\sigma$. Plugging this in to $p_{k}(x)$ and taking the log we can find the form:
+
+$$ \delta_{k}(x) = x\cdot \frac{\mu_{k}}{\sigma^{2}} - \frac{\mu_{k}^{2}}{2\sigma^{2}} + log(\pi_{k}) $$
+
+Where, under LDA, we assign class $k$ to observation $x$ for the class which maximizes $\delta_{k}(x)$. $\delta_{k}(x)$ is known as the \textbf{discriminant function}. The \textit{linear} in LDA comes from the fact that the discriminant function is linear in $x$.
+
+LDA approximates the unknown parameters $\pi_{k}$ and $\sigma$ with
+
+$$ \hat{\pi_{k}} = \frac{1}{n_{k}} \sum_{i:y_{i}=k} x_{i} $$
+
+$$ \hat{\sigma^{2}} = \frac{1}{n-K} \sum_{k=1}^{K} \sum_{i:y_{i}=k} (x_{i} - \hat{\mu_{k}})^{2} $$
+
+For $p>1$, we assume the predictor $X$ is drawn from a \textbf{multi-variate Gaussian} where the class mean becomes a vector of size $p$ (a mean per class $k$ for each predictor $X_{i}$), $E(X_{k})=\mu_{k}$, and the the common variance becomes a covariance matrix of size $p\times p$, $Cov(X)=\matr{\Sigma}$. With this, $f_{k}(x)$ becomes:
+
+$$ f_{k}(x) = \frac{1}{(2\pi)^{p/2}|\matr{\Sigma}|^{1/2}}exp \left( -\frac{1}{2}(x-\mu_{k})^{T}\matr{\Sigma}^{-1}(x-\mu_{k}) \right) $$
+
+We can then define an analogous discriminant function:
+
+$$ \delta_{k}(x) = x^{T}\matr{\Sigma}^{-1}\mu_{k}-\frac{1}{2}\mu_{k}^{T}\matr{\Sigma}^{-1}\mu_{k} + log\pi_{k} $$
+
+The linearity of $x$ can also be shown in the $p=1$ case, however we show it here. When working through the derivation and eliminating all constant terms (since we only care about relative differences), we find a term $x^{T}\matr{\Sigma}^{-1}x$ which is quadratic in $x$. Since this is not dependent on $k$, it will be constant over all classes and can be eliminated and thus we eliminate the only non-linear $x$ term. Note: $\delta_{k}(x) \neq log p_{k}(x)$! $\delta_{k}(x)$ is $log p_{k}(x)$ rearranged and with all constant terms eliminated as we only care about assigning class $k$ where $p_{k}(x)$ is greatest, we don't care for the specific value of $p_{k}(x)$.

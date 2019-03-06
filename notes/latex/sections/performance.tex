@@ -1,0 +1,266 @@
+\section{Measures}
+
+\subsection{Statistical Errors}
+
+\subsubsection{Standard Error}
+
+The standard error tells us how much, on average, our estimate for a statistic differs from the true value. This doesn't mean what the actual error is, but what the \textit{expected} error is. For $\mu$ the standard error on $\hat{\mu}$ is given by:
+
+$$ Var(\hat{\mu}) = SE(\hat{\mu})^{2} = \frac{\sigma^{2}}{n} $$
+
+We can also calculate this for $\beta_{0}$ and $\beta_{1}$:
+
+$$ SE(\hat{\beta}_{0})^{2} = \sigma^{2} \left[ \frac{1}{n} + \frac{\bar{x}^{2}}{\sum^{n}_{i=1}(x_{i} - \bar{x}^{2})^{2}} \right] $$
+
+$$ SE(\hat{\beta}_{1})^{2} = \frac{\sigma^{2}}{\sum^{n}_{i=1}(x_{i} - \bar{x}^{2})^{2}} $$
+
+For these to be strictly valid, we require that all residuals $e_{i}$ are uncorrelated and all share a common variance $\sigma^{2}$.
+
+\subsubsection{Residual Standard Error}
+
+The residual standard error is essentially the sample deviation:
+
+$$ RSE = \hat{\sigma} = \sqrt{\frac{RSS}{n-2}} $$
+
+It measures the 'lack of fit' of the model - high values indicate that the model does not fit well and as it approaches zero it indicates a good fit. The RSE implies that even if all parameters were known exactly, the random error $\epsilon$ would lead to an average deviation equal to the RSE. The RSE being non-normalized means that assessing performance is subjective. Additionally it is in the units of $Y$ which may complicate matters further.
+
+In general (for multiple regression) the RSE is:
+
+$$ RSE = \hat{\sigma} = \sqrt{\frac{RSS}{n-p-1}} $$
+
+\subsubsection{Confidence Intervals}
+
+A confidence interval is a range where we can say that true value of a parameter will lie within that range with a given probability. A 95\% confidence interval would be an interval where we could say with 95\% certainty that the true parameter value was within the boundaries. For simple linear regression, the confidence intervals are:
+
+$$ \hat{\beta}_{1} \pm 2\times SE(\hat{\beta}_{1}) $$
+$$ \hat{\beta}_{0} \pm 2\times SE(\hat{\beta}_{0}) $$
+
+\subsubsection{Prediction Intervals}
+
+Prediction intervals are similar to confidence intervals except they pertain to individual readings rather than the expected population value. They include both the reducible error (bias) and the irreducible error, which means they are larger than the corresponding confidence interval. They are still centred about the same point however (mean).
+
+\subsubsection{Hypothesis Testing}
+
+Hypothesis testing is a way to reject or accept certain beliefs about the model. You create a null hypothesis, or the hypothesis you assume to be true, and also an alternative hypothesis which you will accept if you can reject (prove false) the null hypothesis. In simple linear regression, we could have:
+
+$H_{0}$: There is no relationship between $X$ and $Y$, $H_{0}: \beta_{1} = 0$\\
+$H_{a}$: There is some relationship between $X$ and $Y$, $H_{a}: \beta_{1} \neq 0$
+
+We can then accept or reject the null hypothesis by testing whether our estimate for $\beta_{1}$, $\hat{\beta}_{1}$, is sufficiently far from 0. To determine what 'sufficiently' means we can use a \textbf{t-statistic}.
+
+\subsubsection{T-Statistic and P-Value}
+
+The t-statistic measures the number of standard deviations a parameter is away from some value. For the hypothesis test above, we want to test how far away $\hat{\beta}_{1}$ is from 0 which requires normalization as 'far from zero' is of course relative to how large the parameter actually is:
+
+$$ t = \frac{\hat{\beta}_{1} - 0}{SE(\hat{\beta}_{1})} $$
+
+Generally:
+
+$$ t = \frac{\hat{\beta}_{i} - K}{SE(\hat{\beta}_{i})} $$
+
+For any parameter or statistic $\hat{\beta}_{i}$ where $K$ can be any constant, usually for when a null hypothesis is of the form: $H_{0}: \beta_{i} = K$.
+
+From this we can calculate the probability of observing any number greater than or equal to $|t|$ assuming that the null hypothesis is correct by using the expected \textbf{t-distribution} for a correct null hypothesis (note, we use $|t|$ because this is a two-tailed test, if this was one tailed then we would treat $t$ and $-t$ as different values). The resultant probability is called the \textbf{p-value}. If we observed a p-value of 0.01 (1\%) we may decide to reject the null hypothesis in favour of the alternative hypothesis, thus stating that there is a high chance that there is a relationship.
+
+\subsubsection{Total Sum of Squares (TSS)}
+
+The total sum of squares (TSS) is a measure of the total variance in the response $Y$ and can be thought of the amount of variability inherent in the response before any regression if performed. It is calculated as:
+
+$$ TSS = \sum(y_{i} - \bar{y})^{2} $$
+
+\subsubsection{$R^{2}$ Statistic}
+
+The $R^{2}$ statistic is a normalized statistic with a range of 0 to 1 with no units and acts as a performance metric for a regression. It is calculated as:
+
+$$ R^{2} = \frac{TSS-RSS}{TSS} $$
+
+The $R^{2}$ metric can be interpreted as the proportion of variability in $Y$ that can be explained using $X$. As in, with TSS being the variability before regression and RSS being the variability after it, $R^{2}$ is a measure for how much of the initial variability the model can account for (i.e. all $Y$s may be very spread but if given $X$ values we can predict corresponding $y$ values exactly with no variability, our model has entirely explained the relationship).
+
+The $R^{2}$ statistic is highly related to correlation as it essentially measures the quality linear relationship between $X$ and $Y$ - if they are perfectly linear then, other than random error, the regression should be very accurate and thus explains a large amount of the initial variability. We find:
+
+$$ R^{2} = r^{2} = Corr(X,Y)^{2} $$
+
+In a multiple linear regression setting, we find:
+
+$$ R^{2} = Corr(Y,\hat{Y})^{2} $$
+
+\subsubsection{F-Statistic}
+
+For a multiple linear regression setting we want to perform the same hypothesis test where we check whether parameters are zero, except in this case we must check if they are all zero rather than just one. To do this we use a f-statistic:
+
+$$ F = \frac{\frac{TSS-RSS}{p}}{\frac{RSS}{n-p-1}} $$
+
+If linear assumption is correct we find that
+
+$$ E[\frac{RSS}{n-p-1}] = \sigma^{2} $$
+
+And if $H_{0}$ is correct
+
+$$ E[\frac{TSS-RSS}{p}] = \sigma^{2} $$
+
+In both, $n$ is the number of data points and $p$ is the number of predictors. These give us an f-statistic of 1 if there is no linear relationship ($H_{0}$ is true). If $H_{a}$ is correct in stead we expect $ E[\frac{TSS-RSS}{p}] > \sigma^{2} $ and therefore the f-statistic will be greater than 1. Much like the t-statistic, one can construct an f-distribution in order to read off a \textbf{p-value} which we can use to determine significance.
+
+It is also possible to compute an f-statistic between two models as opposed to one model vs no relationship at all. Suppose we want to compare a model with 10 predictors and the same model with $q$ predictors removed (we want to test a less flexible model), we can calculate the f-statistic with:
+
+$$ F = \frac{\frac{RSS_{0}-RSS}{q}}{\frac{RSS}{n-p-1}} $$
+
+Where $RSS_{0}$ is the $RSS$ for the model without the $q$ predictors and $RSS$ is the $RSS$ value for the full model (all parameters including $q$). It turns out that the t-statistic and corresponding p-value for each individual predictor is related to the f-statistic for a model where $RSS_{0}$ is the model where all parameters exist except the one in question. In fact, the square of the t-statistic is equal to the f-statistic in that case. We still care about the overall f-statistic however as if you had 100 predictors with a 0.05 p-value cutoff and you calculated their significance (with a t-test) individually, you would find 5\% of your predictors are statistically relevant by pure chance, even if they are not. The overall f-statistic does not fall victim to this as it scales with the number of predictors.
+
+\subsection{Response Errors}
+
+\subsubsection{Residual Sum of Squares (RSS)}
+
+The residual sum of squares is simply the sum of the square residuals:
+
+$$ RSS = \sum^{n}_{i=1} (y_{i} - \hat{y}_{i})^{2} $$
+
+It resembles the mean squared error (MSE) without the normalization term. The RSS can be understood as the amount of variability that is left unexplained after performing the regression - it is a measure of the variability of the predicted response to the true response.
+
+\subsubsection{Mean Squared Error}
+Mean squared error is a error/loss measure used for continuous (regression) problems. It is defined as:
+
+$$ MSE = \frac{1}{n} \times \sum^{n}_{i=1} (y_{i}-\hat{f}(x_{i}))^{2} $$
+
+Where $\hat{f}$ is our current estimate for $f$, $n$ is our total number of data points and $(x_{i},y_{i})$ is the predictor, response pair for the $i^{th}$ data point. Mean squared error calculates the average of the squared difference between the true value $y_{i}$ and the predicted value $\hat{f}(x_{i})$ over all data points.
+
+\subsubsection{Brier Score}
+The Brier score is a error measure for discrete (classification) problems analogous to MSE for regression. It is defined as:
+
+$$ BS = \frac{1}{n} \times \sum^{n}_{i=1} (\hat{f}(x_{i}) - o_{i})^{2} $$
+
+Where $\hat{f}$ is our current estimate for $f$, $n$ is our total number of data points, $x_{i}$ is the predictors at the $i^{th}$ data point and $o_{i}$ is the 'outcome' (class label, binary true/false) at the $i^{th}$ data point. Here, $\hat{f}(x_{i})$ computes the predicted class/probability. This can be further simplified if $\hat{f}(x_{i})$ and $o_{i}$ are binary (or are set to binary) with:
+
+$$ BS = \frac{1}{n} \times \sum^{n}_{i=1} I(\hat{f}(x_{i}),o_{i}) $$
+
+Where $I(x,y)$ is called an indicator variable as is 1 if $x = y$ and 0 otherwise. The simplified Brier score can be seen as the percentage of true classifications (true positive + true negative rate) while the full Brier score, if both predictor and response are continuous, generalizes to a form of MSE.
+
+\section{Diagnosing Performance}
+
+\subsection{The Loss/Flexibility Plot}
+
+It is useful to plot training and test loss against flexibility. Flexibility here is a general concept but could specifically refer to a changing hyper parameter (number of neurons in a neural net). Across the entire domain you would expect the training performance to decrease below the irreducible error $\epsilon$ as it learns the noise (which is what $\epsilon$ is), while the test performance initially converges to an optimal value above the irreducible error and then diverges.
+
+\subsection{Determining Over/Under Fitting}
+
+If we plot our loss metric (such as MSE) for both the test and training set against whatever hyper parameter we wish to increase (or in general, plot against flexibility), any divergence suggests that, beyond the divergence, we have begun to overfit. Ideally we would select the point where performance on the test set is optimal (loss is at a minimum) and any point before this could be considered underfit. Additionally, if you knew what the irreducible error was (in general not possible) you could test for overfitting by whether the training loss is less than $\epsilon$. To do so it must be learning the random noise in the data which is the hallmark of overfitting.
+
+\subsection{Residual Plots}
+
+A residual plot is simply a plot of each residual ($e_{i} = y_{i} - \hat{y}_{i}$). For a simple 1-predictor case this can be against the predictor, but in general it will be against $\hat{Y}$. A residual plot should have no pattern if our model is accurate. That is to say, the residuals should all be independent of each other and share a common variance and have a mean of zero. A perfectly uncorrelated residual plot would suggest that our model perfectly predicts the true population model, minus $\epsilon$ which is exactly what our residuals are. A pattern in the residual plot can suggest that some assumption made for our model is incorrect, usually a linear assumption for non-linearities. The shape of the residual plot can be useful itself as it can suggest what relationship does exist (a U-shape likely means a missing quadratic term) although for complex relationships this is unreliable.
+
+\subsubsection{Studentized Residual Plots}
+
+An extension to residual plots, these simply plot the same as residual plots but each residual is divided by its estimated standard error. This acts as a normalization step and makes spotting outliers or otherwise unexpected data points much easier.
+
+\subsection{The Leverage Statistic}
+
+To diagnose high leverage points we can use a leverage statistic. For simple linear regression this takes the form:
+
+$$ h_{i} = \frac{1}{n} + \frac{(x_{i}-\bar{x})^{2}}{\sum^{n}_{i'=1} (x_{i'}-\bar{x})^{2}} $$
+
+The leverage statistic is always between $\frac{1}{n}$ and 1 and the average leverage statistic for all observations is $\frac{p+1}{n}$, if a given observation has a leverage statistic far larger than this we can likely conclude it is a high leverage point.
+
+\subsection{The Variance Inflation Factor (VIF)}
+
+For detection of multi-collinearity we can compute the VIF which is the ratio of the variance of $\hat{\beta}_{j}$ when fitting the full model divided by the variance of $\hat{\beta}_{j}$ if fit on its own. I.e. find the variance of $\hat{\beta}_{j}$ in both $y = \beta_{0} + \beta_{j}x_{j}$ and $y = \beta_{0} + ... + \beta_{j}x_{j} + ...$. The smallest value of the VIF is 1 and indicates no collinearity.
+
+It can also be calculated with:
+
+$$ VIF(\hat{\beta}_{j}) = \frac{1}{1-R^{2}_{X_{j}|X_{-j}}} $$
+
+Where $R^{2}_{X_{j}|X_{-j}}$ is the $R^{2}$ statistic from a regression of $X_{j}$ onto all of the other predictors.
+
+\subsection{Confusion Matrix}
+
+\textit{Used for binary classification problems (or anything that can be mapped to binary).}
+
+A confusion matrix is a matrix of true/false negative/positive results for a binary problem (any problem can be represented as a binary problem by looking at it as $class=k$ or $class\neq k$ for any number of classes). A \textbf{false positive} is when the algorithm incorrectly classifies a data point as a member of the target class, when it should be a different class. A \textbf{false negative} is when the algorithm incorrectly classifies a data point as \textit{not} a member of the target class, when it should be part of the target class. A \textbf{true positive} or \textbf{true negative} is the opposite - where the algorithm correctly assigns the data point as a member or not member of the target class respectively. A confusion matrix is important as it allows you to detect when the algorithm is not performing in a specific way, e.g. if in a data set 99\% of all data points are members of class $k$, we can obtain 99\% accuracy by classifying all data points as class $k$. If our job is to identify data points that are not class $k$ then we have completely failed our task despite our error measurements suggesting we are doing well - a confusion matrix (specifically the true positive rate/false negative rate: calculating the ratio of these two measures will tell us our true percentage classification of $class\neq k$) can be used to identify this. 
+
+Other names for these measures are the \textbf{sensitivity} and \textbf{specificity}. The \textbf{sensitivity} is the percentage of true positives recorded (true 'target class') or in other words, the ratio of correctly classified positive data points out of all positive data points ($100\times \frac{TP}{TP+FN}$). The \textbf{specificity} is the opposite - the percentage of true negatives recorded (true not 'target class'), or the ratio of correctly classified negative data points out of all negative data points ($100\times \frac{TN}{TN+FP}$).
+
+\subsection{AUC/ROC Curves}
+
+\textit{Used for binary classification problems (or anything that can be mapped to binary).}
+
+A \textbf{ROC Curve} or a \textbf{receiver operating characteristic curve} displays the true positive rate (sensitivity) against the false positive rate (1-specificity) across all possible thresholds (the value you use to assign classes, e.g. set observation $x$ equal to class $k$ if $P(class=k|x) > threshold$). This is achieved as, by setting the threshold, you can obtain any true positive rate (e.g. a threshold of 1 will obtain a perfect true positive rate at the expense of overall accuracy) and a corresponding false positive rate. By scanning over all thresholds you can plot each true positive rate against the corresponding false positive rate. 
+
+The performance of a classifier can be obtained by looking at the \textbf{AUC} or \textbf{area under the (ROC) curve}. A perfect classifier would hug the top left corner s.t. the area under the curve is maximized (as in, a right angled line with 0 false positive rate and 1 true positive rate across all thresholds). A classifier with a straight line where the true positive and false positive rates are equal is known as a 'no information' classifier and is equivalent to a random guess - in such a classifier the AUC would be 0.5, with a perfect classifier having an AUC of 1.
+
+\section{Re-sampling Methods}
+
+When scoring our model we want an unbiased estimate of the performance of our model on the entire population. That is to say, we want to estimate how well the algorithm would have performed if trained on the entire population. This is important as re-sampling methods aren't just for scoring model performance, although that is the first step. We wish to take this score and use it to select the best algorithm out of a collection of algorithms, or do a hyper parameter search, or estimate the error on some model parameter. For all of this we need an accurate measure of error (relative to the population error).
+
+Ideally we would have a training set \textit{and} a test set when we are building our model. We assume that both sets are representative of the population but are independently drawn, this ensures that when we test our model performance on the test set we are testing only on the underlying relationships in the population and not on the noise found in the training set - if the two sets were correlated, for example if we tested our model on the training set, then we run the risk that our metrics will underestimate the true error because the model better fits the random noise. If we satisfy this condition then we know that performance on the test set is an unbiased and accurate estimator for performance on the population. Most of the time however we won't have access to a test set and we have to devise some way to obtain one.
+
+\subsection{Cross-Validation}
+
+Building a \textbf{validation} (\textbf{hold-out set}) set and scoring the algorithm on that can take the place of a dedicated test set. A validation set is built by randomly splitting the training data in to two distinct, non-overlapping sets and using one as the new training set and one as the validation set. These sets are usually equal in size. While this method does solve the issue of a correlated test set, it introduces other issues which could work to make our analysis even worse:
+
+\begin{itemize}
+    \item The random selection of data points for each set could lead to a point where there is not enough data in one or both of the sets to represent the relationship, for example if our relationship followed a sine curve and our random selection was such that one of the sets only had data points at each period. The net effect is that our analysis is heavily dependent on the initial random selection step.
+    \item The accuracy of most algorithms scales with data set size and therefore splitting our data set will naturally reduce accuracy. In particular, we may be led to believe that our algorithm choice performs poorly for our dataset, perhaps suggesting we have made the wrong assumptions, while if trained on the full data set it may have performed well. In this case, the validation set error will \textit{overestimate} the population error for a particular algorithm
+\end{itemize}
+
+Both of these things mean that we cannot guarantee that performance on the validation set will be a good estimator of performance on the population which at the end of the day is the only reason we even want to construct one.
+
+\subsubsection{k-fold Cross-Validation}
+
+\textbf{K-fold cross-validation} aims to solve this problem by reducing the size of the split in to $k$ random, disjoint sets of equal size. The sets are then recombined with $k-1$ of them making the training set and the last set acting as the validation (test) set. Using these sets we can solve both problems. By increasing the size of the training set from $0.5\times$ to $1-\frac{1}{k}\times$ we allow the algorithm to train on as many examples as possible (while retaining the benefits of having a validation set) while reducing the chance of the training set not being representative. There is an issue though, now the validation set is very small. The second step to k-fold CV is to repeat this process $k$ times and on each iteration, use a different set (from the initially generated $k$ sets) for the validation set, with the training set being made up of all sets that weren't used for validation in that iteration. We can then obtain an error estimate that is resistant to the randomization procedure (as we will train and validate on all data points at some point) and in effect, doesn't reduce the size of the training set:
+
+$$ MSE_{overall} = \frac{1}{k}\sum_{i=1}^{k} MSE_{k} $$
+
+There is a special case of k-fold CV called \textbf{leave-one-out cross validation (LOOCV)} where $k=n$, where $n$ is the size of the data set - our validation set is 1 data point. LOOCV removes the randomization element entirely and essentially maximizes training set size (if $n-1<<n$ then your dataset was probably too small in the first place) thus avoiding all the issues inherent in CV while still having an accurate error estimate. The downside is in the computational complexity scales with $k$ and setting $k=n$ means there is no value of $k$ that costs more (for that dataset). There is a special case with linear least-squares regression where we have a computationally efficient trick for calculating $MSE_{overall}$:
+
+$$ MSE_{overall} = \frac{1}{n}\sum^{n}_{i=1} \left( \frac{y_{i}-\bar{y}_{i}}{1-h_{i}} \right)^{2} $$
+
+Where $h_{i}$ is the leverage and $k=n$.
+
+LOOCV is not strictly better in all scenarios however. By maximizing the size of the training set, LOOCV minimizes bias as much as possible without using the full training set and does so considerably more than $k<n$-fold CV. As is usual with reducing bias, LOOCV increases variance on the estimate. Since LOOCV averages $n$ different, high (positively) correlated models (they all contain almost the same data minus one point) and we know that the variance of a collection of values increases with their (positive) correlation, thus the LOOCV average must have higher variance than a $k<n$ average since a dataset of $n-1$ is more correlated with itself than $n-k$.
+
+\textit{This statement arises out of the idea of 'cancelling out'. If you calculate the variance of positively correlated quantities - which these are since the dataset containing $[1,...,n-1]$ is almost identical to that of $[2,...,n]$ and thus they will produce very similar $MSE$ values, or in other words, positively correlated - it will tend to be higher because mathematically variance is dependent on the covariance between data points which is high. Contrarily in $k<n$ the data points are less correlated since there is less overlap in the training sets. Intuitively it can be understood as, if our $n-1$ training set has a high mean estimate then its likely that all other $n-1$ sets will (positive correlation) and so there is nothing to 'cancel it out' whereas with $n-k$ datasets there is more chance of getting a low mean despite other values having high mean which cancels out the effect of the high mean.}
+
+\textit{The important point though is the variability of the chosen model on an unseen dataset. It is an example of overfitting. Since your training set effectively doesn't change, you will select the best performing algorithm/parameter based on which test data best matches the noise in the training data which is a type of overfitting. In $k<n$-fold the training set changes more noticeably and thus the noise does too, meaning you tend to select for the best performing algorithm overall, not just based on training set noise.}
+
+\subsection{Bootstrap}
+
+Bootstrap can be used to estimate the uncertainty for a parameter or algorithm. Ideally, to quantify the uncertainty of a measurement we would draw multiple independent samples (multiple test sets) from the population and recalculate (or rescore in the case of an algorithm) the parameter on each sample, using the set of parameter estimates to estimate the uncertainty. In the real world though we can't generate multiple independent samples since we don't have the underlying population or its generation rules. Bootstrap is a method for generating these samples using the dataset we already have. For a set of size $n$, bootstrap involves sampling $n$ $(X,Y)$ pairs from the dataset at random while allowing duplicates (\textbf{'with replacement'}) - we may have duplicates of some data points while missing other data points entirely. We would do this $i$ times to generate 'bootstrapped' sample sets, $B_{i}$. We can then estimate the variance of our parameter, $\psi$ by calculating the parameter, $\hat{\psi}^{*}_{i}$, for each dataset $B_{i}$ and finally estimating the uncertainty with:
+
+$$ SE(\hat{\psi}) = \sqrt{ \frac{1}{i-1}\sum^{i}_{r=1}\left( \hat{\psi}^{*}_{r} - \frac{1}{i}\sum^{i}_{r'=1} \hat{\psi}^{*}_{r'} \right)^{2}} $$
+
+Where $\hat{\psi}$ is our estimate for $\psi$.
+
+\section{Estimating Test-Set Error}
+
+Training set error can almost invariably be reduced by increasing the flexibility of the model. In a linear regression setting, this could mean increasing the number of predictors endlessly. As such, when we are doing feature selection we cannot rely on grading different models using error metrics that test performance on the training set as this will always select for larger models. Re-sampling methods, as detailed above, are one method for estimating performance on the test set. Another method is \textbf{adjusting the training set error} to take in to account overfitting bias.
+
+It should be noted, the below measures are for least squares linear models. They can be defined for more general models if required.
+
+\subsection{$C_{p}$}
+
+For a least squares model containing $d$ predictors, the $C_{p}$ estimate of the test MSE is:
+
+$$ C_{p} = \frac{1}{n} (RSS+2d\hat{\sigma}^{2}) $$
+
+Where $\hat{\sigma}^{2}$ is an estimate of the variance of the error $\eta$, where this variance is typically estimated on the model containing all predictors.
+
+\subsection{Akaike Information Criterion (AIC)}
+
+AIC is defined for models fit by maximum likelihood.
+
+$$ AIC = \frac{1}{n\hat{\sigma}^{2}}(RSS+2d\hat{\sigma}^{2}) $$
+
+For least squares (which is equivalent to maximum likelihood with Gaussian errors) this is proportional to $C_{p}$.
+
+\subsection{Bayesian Information Criterion (BIC)}
+
+$$ BIC = \frac{1}{n\hat{\sigma}^{2}}(RSS+log(n)d\hat{\sigma}^{2}) $$
+
+BIC penalizes larger models more than $C_{p}$ or $AIC$ as usually $log(n)>2$ (specifically for $n>7$).
+
+\subsection{Adjusted $R^{2}$}
+
+The adjusted $R^{2}$ model, as the name implies, attempts to adjust the usual $R^{2}$ metric to account for increasing model size:
+
+$$ Adjusted R^{2} = 1 - \frac{\frac{RSS}{(n-d-1)}}{\frac{TSS}{(n-1)}} $$
+
+The intuition here is that for $RSS$ by itself, adding noise variables will still reduce $RSS$ but only very slightly. The adjusted $R^{2}$ therefore compensates for this very small increase for a considerably larger decrease as $d$ increases in $\frac{RSS}{(n-d-1)}$.

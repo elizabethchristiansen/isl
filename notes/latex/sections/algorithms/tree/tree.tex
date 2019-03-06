@@ -1,0 +1,25 @@
+\subsection{Decision Trees}
+
+Tree based methods involve segmenting the predictor space in to a number of simple regions defined by some set of rules. One can then traverse the tree, evaluating the current example against each rule, to further reduce the predictor space of interest (e.g. for x = 0.3 and a predictor space of [-1,1], the 'greater than 1' rule means we only have to look at half of our predictor space). Depending on how the rules are formulated, this could be in terms of reducing size (the first rule splits the entire predictor space equally in two, the second splits one of the halves in two again so it is clearly a smaller divide), in terms of maximal information gain (decisions which result in more information are performed first) or even in terms of evaluation complexity (compute cheap rules first to get a good approximation before expensive refinement).
+
+Decision trees are called as such because they can be represented graphically as a tree where at each each 'internal node' we make a decision (evaluate a rule) to decide which 'branch' we go down (left or right for a 2-dimensional tree) which we repeat at the next internal node until we reach a 'terminal node' or a 'leaf' which is our decision given our measurement - this could be an explicit value, it could be the average value of the response in that segment of the predictor space, and so on.
+
+The training procedure for stratifying a predictor space (building a decision tree) would be to find boxes (n-dimensional rectangles), $R_{1},...,R_{J}$ that minimize the RSS: 
+
+$$ \sum^{J}_{j=1}\sum_{i\in R_{j}} (y_{i}-\hat{y}_{R_{j}})^{2} $$
+
+This is computationally infeasible however as there are too many possible boxes considering the number of boxes $J$ and the size of each box. Instead, we use a \textit{top-down}, \textit{greedy} approach known as \textbf{recursive binary splitting}. For $J$ predictors:
+
+\begin{itemize}
+    \item Select a predictor $X_{j}$ and a cut point $s$ that minimizes the above RSS for the regions $R_{1}(j,s)={X|X_{j}<s}$ and $R_{2}(j,s)={X|X_{j}\ge s}$, where $\hat{y}$ is the mean response for observations in that region.
+    \item Repeat the process but instead of looking at the entire predictor space, perform the above split in each individual region, selecting the single split that minimizes the RSS (as in, while we find the optimal split in each region, we only use the better of the two). This algorithm continues, selecting the single best split at each iteration.
+    \item Continue until some \textbf{stopping criteria} is met, such as a certain number of regions, requiring that each region contains no more than $N$ observations each, and so on. It is important to note, a stopping criteria is necessary. Without one, the algorithm would continue until a single observation exists in each region which has the effect of overfitting to the point where the training set achieves 100\% performance.
+\end{itemize}
+
+\subsubsection{Pruning}
+
+One method of avoiding overfitting is by pruning the tree. Pruning involves growing the full tree and working bottom-up to remove nodes in order of smallest gain in accuracy (which could also be a \textit{reduction}) on a validation set. \textbf{Cost complexity pruning} or \textbf{weakest link pruning} parametrises this process by reformulating the RSS measure to include a penalty on tree complexity parametrised by $\alpha$:
+
+$$ \sum^{|T|}_{m=1}\sum_{i:x_{i}\in R_{m}} (y_{i}-\hat{y}_{R_{m}})^{2} + \alpha|T| $$
+
+For some subtree $T\subset T_{0}$. Here, $|T|$ is the number of terminal nodes (the complexity) in the tree. Selecting $\alpha$ is usually done with cross-validation whereby you create your $K$-folds and select $K$ values for $\alpha$. For each fold, generate a tree on the training set and perform cost complexity pruning to produce an optimal subtree for the given $\alpha$ - nodes are iteratively removed thereby reducing |T| and based on the $\alpha|T|$ term there will be some optimal complexity. This is repeated on the next fold and after all folds are trialled we average the results for a given $\alpha$. This can be performed for a range of $\alpha$ values. It is important to note that because of the discrete nature of decision trees (you can't have 1.5 nodes!), there will be some range $\alpha_{1}\le \alpha < \alpha_{2}$ where the optimal subtree will be the same. One can then select the best $\alpha$.

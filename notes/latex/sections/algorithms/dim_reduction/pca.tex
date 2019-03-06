@@ -1,0 +1,43 @@
+\subsection{Principal Component Analysis}
+
+One way of selecting $Z$ is to use Principal Component Analysis (PCA). PCA works by building the data $X$ from its 'principal' components in descending order ($Z_{1}$ would be the most principal, and so on). 'Principal' here means the direction of the data with which observations vary the most. For a simple 2-dimensional linear regression, the first principal component ($Z_{1}$) may be the line that best describes the relationship. The second principal component ($Z_{2}$) would be perpendicular to this line. In fact, this is a rule: all principal components must be uncorrelated with all other principal components or, in other words, they must be orthogonal.
+
+PCA is an unsupervised approach. When used in regression, we may be selecting coefficients based on a known response $Y$ but for finding the principal components themselves, we only have access to the features $X$. 
+
+The $i$th principal component of a set of features $X$ of length $p$ is:
+
+$$ Z_{i} = \sum_{j=1}^{p}\phi_{ji}X_{j} $$
+
+Where $\phi_{ji}$ is the $j$th component of the \textbf{loadings} of principal component $i$. These $\phi$ are normalized: $\sum_{j=1}^{p}\phi_{ji}^{2}=1$ for each $i$. The \textbf{principal component loading vector} for principal component $i$ is thus: $\phi_{i}=(\phi_{1i},...,\phi_{pi})^{T}$.
+
+Given a dataset of size $n$ with $p$ features (a $n\times p$ matrix $\mathbf{X}$) and normalized to have zero mean and a standard deviation of 1, we can find the first principal component through the optimisation problem:
+
+$$ \text{maximize}_{\phi_{1}} \left\{ \frac{1}{n} \sum_{i=1}^{n} \left( \sum_{j=1}^{p} \phi_{j1}x_{ij} \right)^{2} \right\}\; \text{subject to}\; \sum_{j=1}^{p}\phi_{j1}^{2}=1 $$
+
+Which is possible since we wish to maximize the variance captured by the first principal component. We can rewrite the objective as $\frac{1}{n}\sum_{i=1}^{n}z_{i1}^{2}$ and since $\frac{1}{n}\sum_{i=1}^{n}x_{ij}=0$ (zero mean constraint) the average of all $z$ will be zero as well. Thus, the objective is simply maximizing the sample variance of the $n$ values of $z_{i1}$. The set of $z_{i}$ values are called the \textbf{scores} of the $i$th principal component. This optimisation problem can be solved with eigen decomposition.
+
+The loading vectors and scores can be interpreted as the direction with which the data varies the most and the projection of each data point on to these directions, respectively.
+
+The second principal component (and all others after it) can be found in a very similar way. Each time you wish to find the next principal component, a new constraint must be added: the $i$th principal component ($i>1$) must be orthogonal to all previous ($i-1$) principal components: the second principal component must be orthogonal to the first, the third must be orthogonal to the first and second, and so on.
+
+With these principal components we can reduce the dimensionality of our original problem to an arbitrary dimension $M$ ($M\le min(n-1,p)$, $M\ge1$) which could be useful in regression (reducing the number of features helps prevent overfitting) or analysis (being able to visualize high dimensionality data in 2 or 3 dimensions). In fact, if we plot the score vectors $Z_{i}$ against each other, this amounts to projecting the data down onto the subspace spanned by $\phi_{i}$. One could, for example, project the dataset in to two dimensions by plotting the first and second principal component scores for each data point on a graph and drawing in the loading vector lines for each feature. You could then roughly which features are related (if a subset of the features are explained by the same loading vector more than the other, they may be related), what features each principal component is explaining, where each data point lies in relation and so on.
+
+Principal components can also be interpreted as providing low dimensionality linear surfaces that are 'closest' to the data. The first principal component has the property that it is the line in p-dimensional space that is closest to to the n observations. The first and second principal component define a plane in p-dimensional space that is closest to the n observations, and so on.
+
+\subsubsection{How Much Variance Does Each PC Explain}
+
+There is a set amount of variance in the dataset and each principal component accounts for some amount of that variance, with $M=p$ accounting for all of it. The total variance present in the data (assuming normalization) is defined as:
+
+$$ \sum_{j=1}^{p} \text{Var}(X_{j}) = \sum^{p}_{j=1}\frac{1}{n}\sum_{i=1}^{n}x_{ij}^{2} $$
+
+And the variance explained by the $m$th principal component is:
+
+$$ \frac{1}{n}\sum_{i=1}^{n}z_{im}^{2} = \frac{1}{n}\sum_{i=1}^{n}\left( \sum_{j=1}^{p}\phi_{jm}x_{ij} \right)^{2} $$
+
+Using this we can define the \textbf{proportion of variance explained}, or \textbf{PVE}, of the $m$th principal component as:
+
+$$ \frac{\sum_{i=1}^{n}\left( \sum_{j=1}^{p}\phi_{jm}x_{ij} \right)^{2}}{\sum^{p}_{j=1}\sum_{i=1}^{n}x_{ij}^{2}} $$
+
+The PVE is always positive and the sum of all PVE's (over all principal components) is 1. In general, a $n\times p$ data matrix $\mathbf{X}$ has $\text{min}(n-1,p)$ principal components.
+
+Generally, there is no rule as to how many principal components are necessary and there is no automatic way to discover it (such as cross validation). One subjective method is a \textbf{scree plot} which is a plot of PVE for each principal component. You would then look for an 'elbow' - the point where the decrease in PVE starts to taper off. If the principal components are to be used in a supervised model (e.g. for principal component regression) then more objective techniques (cross validation) can be used.

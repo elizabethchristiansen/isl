@@ -1,0 +1,13 @@
+\subsection{Hyperplanes}
+
+The goal of all SVM and SVM related methods is to discover a hyperplane. A hyperplane in $p$ dimensional space is a "flat affine subspace of dimension $p-1$" (\textbf{affine} means it does not need to pass through the origin) - essentially it cuts the space in to two segments: a line in 2-dimensional space, a plane in 3-dimensional space. Hyperplanes are restricted to being linear although non-linear analogues to hyperplanes exist. Since hyperplanes divide the space in to two segments, they only work for binary classification problems. There are ways to adapt hyperplane approaches for multi-class problems although fundamentally each individual problem is a binary problem.
+
+Mathematically, a hyperplane in $p$ dimensions can be defined as:
+
+$$ H(X) = \beta_{0} + \sum_{i}^{p} \beta_{i}X_{i} $$
+
+If we can find the values of $\beta$ for our dataset, this can be used as a classifier by setting one class to be $H(X)>0$ and one class to be $H(X)<0$. Given a data point at test we can work out which side of the hyperplane it lies on. From this a classifier can be created based on the sign of $H(X)$ and a measure of certainty be derived from the distance of the data point from the hyperplane. This can also be formulated as:
+
+$$ y_{i}H(x_{i}) > 0 $$
+
+For $y_{i}$ defined as $1$ for one class and $-1$ for the other.

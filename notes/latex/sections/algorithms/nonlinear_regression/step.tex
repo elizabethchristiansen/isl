@@ -1,0 +1,15 @@
+\subsection{Step Functions}
+
+While polynomial regression imposes a global structure for $f$, step functions seek to split the domain in to some number of bins and fit a constant per bin. This amounts to converting a continuous variable in to an \textbf{ordered categorical variable}.
+
+Essentially, we select some number, $K$, of cut points $c_{k}$ in the range of $X$, usually uniformly distributed although not by necessity, and create new variables:
+
+$$ C_{k}(X) = I(c_{k}\leq X < c_{k+1}) $$
+
+With $c_{0} = 0$ and $c_{K+1} = max(X)$. We then construct our response function as:
+
+$$ y_{i} = \beta_{0} + \beta_{1}C_{1} + ... + \beta_{K}C_{K} + \eta_{i} $$
+
+Since we have For a given value of $x$, only one $C_{k}$ can be non-zero.
+
+Once again, since this is essentially a linear regression problem, we have access to all our normal tools. It also adapts similarly to logistic regression.

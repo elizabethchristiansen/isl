@@ -1,0 +1,9 @@
+When performing regression it is important to note that there are actually two equations defining the relationship, the \textbf{least squares line}:
+
+$$ \hat{y} = \hat{\beta}_{0} + \hat{\beta}_{1}x_{1} $$
+
+Which is our best estimate for the relationship, and the \textbf{population regression line}:
+
+$$ y = \beta_{0} + \beta_{1}x_{1} + \epsilon $$
+
+Which is the true relationship. The distinction here is that the population regression line includes $\epsilon$ which cannot be calculated from data and the parameters are all 'exact' (they are as theoretically good as they can be). We therefore care that $\hat{\beta}_{i}$ is an unbiased estimator for $\beta_{i}$ which would imply that $\hat{y}$ is an unbiased estimator for $y$. 

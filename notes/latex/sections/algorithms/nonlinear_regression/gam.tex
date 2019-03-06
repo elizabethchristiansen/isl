@@ -1,0 +1,11 @@
+\subsection{Generalized Additive Models}
+
+Many of the non-linear regression approaches detailed above apply only to single-predictor regression ($p=1$). Generalized additive models (GAMs) provide a generalized framework that allows for these techniques, and others, to be used in a multiple predictor setting ($p>1$). As in the name, these preserve additivity found in linear regression.
+
+A GAM takes the form:
+
+$$ y_{i} = \beta_{0} + \sum^{p}_{j=1}f_{j}(x_{ij}) + \eta_{i} $$
+
+Where for simple linear regression, $f_{j}(x_{ij}) = \beta_{j}x_{ij}$. GAMs learn a separate $f_{j}$ for each $X_{j}$ and are therefore additive.
+
+For a regression spline approach, for example, GAMs provide a simple way of extending them to multiple predictors. Each $f_{j}$ would be a whole regression spline and they could all be added to the function and solved with least squares simultaneously. Is it not enough to solve each regression spline individually however as each spline may take on a different form if variables are added to the model, which we cannot accommodate if they are trained individually and added at the end. Regression splines are useful in this sense as when formulated as a GAM they can still be trained with least squares. Smoothing splines, for example, cannot be fit like this and are instead fit with a method known as \textbf{backfitting}. Backfitting involves updating each model individually, keeping the others fixed, at each iteration.

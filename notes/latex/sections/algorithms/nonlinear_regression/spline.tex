@@ -1,0 +1,49 @@
+\subsection{Regression Splines}
+
+Regression splines are another basis function approach where we fit a polynomial function within each bin. In that sense, they are a combination of polynomial regression and step regression. The problem is that, when applying this naively, there is a discontinuity at the boundaries of each bin. We could require that $b_{j}(c_{j+1})=b_{j+1}(c_{j+1})$ - that the function value should be equal in both bins at their shared boundary, known as continuity - but then we get odd behaviour such as instantaneous change in direction. To fix this added problem, we impose two extra conditions: that the function value (the original condition), its first derivative and second derivative all be continuous. Selecting the second derivative is a mathematically arbitrary selection however for humans this makes the discontinuity imperceptible.
+
+In splines, the bin boundaries are known as \textbf{knots}. To create an optimisation function for regression splines, we start with a polynomial regression function:
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{i} + ... + \beta_{K}x_{i}^{K} + \eta_{i} $$
+
+And, for each knot, we add a \textbf{truncated power basis function} defined as:
+
+\begin{equation}
+    h(x,\xi) = (x-\xi)^{n}_{+} =
+    \begin{cases}
+        (x-\xi)^{n} & \text{if}\ x>\xi \\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+Where $\xi$ is the knot location (in $x$) and $n$ is the polynomial degree, where usually you use $n=3$. In the end, for $K$ knots and $n=3$, we are fitting $X$, $X^{2}$, $X^{3}$, $h(x,\xi_{1})$, $...$, $h(x,\xi_{K})$ with a $\beta$ for each.
+
+This gives us $n+K+1$ degrees of freedom with $1$ being the intercept.
+
+One finds that at the boundaries, $x<\xi_{1}$ and $x>\xi_{K}$, there is high variance. A solution to that is \textbf{natural splines} where the function in each boundary area is restricted to be linear.
+
+Deciding on the number of knots $K$, and where to place them, can be decided either with knowledge of the function behaviour (we may want more knots where the function behaves more non-linearly) or with cross validation and similar methods.
+
+\subsection{Smoothing Splines}
+
+Smoothing splines take a different approach to the basis function approach. They intend to find an arbitrary $g(x)$ that best fits the data with the added condition of smoothness. Without a smoothness condition, one could find a $g(x)$ that perfectly interpolates the training data but would obviously score abysmally on test data. We also want the smoothness restriction because it looks nice and makes more sense: would be strange to have a prediction be wildly different from the prediction directly next to it (in $x$). To achieve this the minimization function becomes:
+
+$$ \sum^{n}_{i=1}(y+{i}-g(x_{i}))^{2} + \lambda\int g''(t)^{2}dt $$
+
+Where $\lambda$ is a non-negative tuning parameter. The function $g(x)$ that minimizes this function is the \textbf{smoothing spline}. It can be shown that the function that satisfies this minimization is a piecewise cubic polynomial with knots at each unique $x_{i}$ and has continuous first and second derivatives at each knot. Furthermore, it is linear beyond each boundary. This obviously resembles a natural spline with knots at all unique $x_{i}$ however the tuning parameter $\lambda$ shrinks the result such that it is not the same natural spline we would get if we applied the basis function approach.
+
+Since the $\lambda$ parameter smooths the line, it has the effect of reducing the \textbf{effective degrees of freedom} even though, according to the same degrees of freedom metrics in natural splines, it would have $n$ (where $n$ is the total number of data points) degrees of freedom (for each knot). It can be shown that the effective degrees of freedom reduces from $n\to 2$ as $\lambda$ is increased. We can write the solution as:
+
+$$ \hat{g}_{\lambda} = S_{\lambda}y $$
+
+Where $\hat{g}_{\lambda}$ is our predicted $g(x)$ for a given $\lambda$ and $S_{\lambda}$ is a $n\times n$ matrix of fitted values. Using this, we can define the effective degrees of freedom as:
+
+$$ df_{\lambda} = \sum^{n}_{i=1}(S_{\lambda})_{ii} $$
+
+Or, the \textbf{trace} of $S_{\lambda}$.
+
+As it turns out, selecting $\lambda$, which could be done naively with standard cross validation, is computationally very easy as one can essentially perform a full LOOCV pass (which would require $n$ fitted models) for each $\lambda$ in a single pass with the equation:
+
+$$ RSS_{cv}(\lambda) = \sum^{n}_{i=1}(y_{i}-\hat{g}_{\lambda}^{-i}(x_{i}))^{2} = \sum^{n}_{i=1}\left[ \frac{y_{i}-\hat{g}_{\lambda}(x_{i})}{1-(S_{\lambda})_{ii}} \right]^{2} $$
+
+Where $\hat{g}_{\lambda}^{-i}(x_{i})$ is the fitted value of the spline evaluated at $x_{i}$ with the $i$th data point left out of training (LOOCV). Here, the left hand side would be the standard LOOCV approach while the right hand side is our convenient trick.

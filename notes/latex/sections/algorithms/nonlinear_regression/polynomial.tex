@@ -1,0 +1,21 @@
+\subsection{Polynomial Regression}
+
+Polynomial regression involves manually adding polynomial terms to the standard linear regression:
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{i} + \eta_{i} $$
+
+Becomes:
+
+$$ y_{i} = \beta_{0} + \beta_{1}x_{i} + \beta_{2}x_{i}^{2} + ... + \beta_{d}x_{i}^{d} + \eta_{i} $$
+
+For polynomial regression up to the $d$th order.
+
+Since this is still effectively a linear regression problem all our tools with linear regression are still available: how we train it, our error metrics, etc.
+
+We can also calculate error (variance) on the predicted value, $\hat{f}(x)=\hat{y}$, by using the variances of our predicted $\hat{\beta}$ values:
+
+$$ Var(\hat{f}(x_{0})) = l_{0}^{T}\hat{C}l_{0} $$
+
+For $l_{0}^{T}=(1,x_{0},x_{0}^{2},...,x_{0}^{d})$ and $\hat{C}$ is a $d\times d$ covariance matrix for $\hat{\beta}$. This only gives us the variance at a specific point $x_{0}$ so to calculate the variance across the entire domain we could create a grid of $x$ points and calculate at each grid point. To obtain the error here, we simply root the variance. Generally, for normally distributed errors, the 95\% confidence margin is approximately two times the standard error ($\sqrt(Var)$).
+
+Polynomial regression can also be used with logistic regression to tackle non-linear classification problems without any changes to the base logistic regression algorithm (much the same way polynomial regression is essentially linear regression).

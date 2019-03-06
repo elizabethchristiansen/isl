@@ -1,0 +1,16 @@
+\subsection{Support Vector Classifier}
+
+The support vector classifier, or a \textbf{soft margin classifier}, is simply the extension of the MMC to allow for some incorrectly classified data points (data points either within the margin or on the wrong side of the hyperplane entirely). The optimisation problem for SVC is very similar to the MMC:
+
+\begin{align*}
+    &\text{maximize}_{\beta_{i},M}\: M \\
+    &\text{subject to}\: \sum_{j=1}^{p}\beta_{j}^{2}=1 \\
+    &y_{i}H(x_{i}) \ge M(1-\eta_{i})\: \forall i=1,...,n
+    &\eta_{i}\ge 0,\: \sum^{n}_{i=1}\eta_{i}\le C
+\end{align*}
+
+Where $C$ is a non-negative tuning parameter. $M$ is still the size of the margin and $\eta_{i}$ are \textbf{slack variables} that allow individual observations to violate the margin or the hyperplane. We can see that if $\eta_{i}>0$ then observation $x_{i}$ will be on the wrong side of the margin and if $\eta_{i}>1$ then observation $x_{i}$ will be on the wrong side of the hyperplane. As such, $\eta_{i}$ effectively tells us where $x_{i}$ is located. Since the sum of all $\eta$s is bounded, $C$ represents how many incorrectly classified data points we will accept - our \textit{budget for violations}. 
+
+As with all algorithms, $C$ controls the bias-variance trade off. High $C$ reduces variance by creating a more lax classifier but with increased bias. A lower $C$ increases the variance by being more strict and fitting the training data more closely but decreases bias as a result.
+
+As we saw with the MMC and support vectors, it turns out that the SVC also has support vectors. Only data points that either lie on the margin or violate the margin actually affect the resulting hyperplane. These are support vectors. This property explains how $C$ controls the bias-variance trade-off: as $C$ increases, the number of support vectors increases and you are therefore using more of the data set and reducing variance as a result but contrarily increasing bias since your result is increasingly dependent on the training set. The opposite is true for decreasing $C$.

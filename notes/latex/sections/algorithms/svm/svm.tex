@@ -1,0 +1,25 @@
+\subsection{Support Vector Machines}
+
+As SVCs were an extension to MMCs, SVMs are an extension to SVCs. In particular, SVMs take SVCs and extend the decision boundary (the hyperplane) to be non-linear.
+
+The simple way to extend the decision boundary to accommodate for non-linear relationships is the same as with other methods: enlarge the feature space to include quadratic, cubic and higher order terms. Interestingly, in the enlarged feature space such a decision boundary is still linear. It is when this learned decision function is used in the original feature space that it produces a non-linear boundary. You could also include interaction terms or different functions altogether (other than polynomials) to represent your relationships but there is obviously far too many possible non-linearities that must be accounted for and in most cases you couldn't realistically find the right ones to enlarge the feature space with (not to mention enlarging the feature space increases the computational complexity).
+
+The more popular way to enable a non-linear decision boundary is with \textbf{kernel functions} (see definition). The support vector classifier can be written as:
+
+$$ f(x) = \beta_{0} + \sum_{i\in S}\alpha_{i} \langle x,x_{i} \rangle $$
+
+Where $S$ is the set of support vector indices. The task is then to find $\beta_{0}$ and $\alpha$. In particular, the inner product $\langle x,x_{i} \rangle$ produces a linear decision boundary. We can generalize this function with a kernel to produce:
+
+$$ f(x) = \beta_{0} + \sum_{i\in S}\alpha_{i} K(x,x_{i}) $$
+
+Where $K$ is our kernel function and can be set to model the behaviour we are looking for.
+
+Fitting with a kernel amounts to fitting the support vector classifier in higher dimensional space (which produces a linear boundary) and mapping back to the original space, as before. A support vector classifier using a non-linear kernel function is known as a \textbf{support vector machine}.
+
+\subsubsection{SVMs For More Than Two Classes}
+
+Hyperplane methods do not lend themselves well to multi-class classification as they only divine the decision space in to two parts. There are generally two ways to get around this limitation: \textbf{one-versus-one classification} and \textbf{one-versus-all classification}.
+
+\textbf{One-versus-one} classification involves creating a SVM for each pair of classes. For a test observation, it is compared in each SVM and the 'votes' are tallied up for each class. The class which the majority of SVM pairs voted for is the classification for the test observation, and a measure of certainty can be obtained from how many votes the class received compared to other classes (if it only one by 1 vote in a 20-class classification, it probably isn't very reliable).
+
+\textbf{One-versus-all} classification involves comparing one class against all other classes simultaneously. We represent the $K-1$ classes as a pseudo-class ('not class $K$') and compare it against class $K$. We generate $K$ of these SVMs, each comparing one class against all others. The classification is performed by assigning a test observation to the class $K$ for which $f_{K}(x)$ is largest.

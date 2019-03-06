@@ -1,0 +1,15 @@
+\subsection{The Bayes Classifier}
+
+The Bayes classifier is an ideal classifier that always places an unknown observation in the class for which is has the highest probability of membership. It assigns to a class $j$ for which
+
+$$ Pr(Y=j|X=x_{0}) $$
+
+is maximized. Where $Y$ is the observation's unknown class and $x_{0}$ is the observations predictor values. Simple enough, but actually calculating this probability is usually not directly possible and we therefore either need to approximate it or use another method entirely.
+
+We can use this to define a Bayes \textbf{decision boundary} where we can decide an observation's class by which side of the boundary it falls on.
+
+The Bayes classifier also gives rise to an ideal, irreducible error rate which is the theoretical best performance any classification algorithm could obtain given the data available:
+
+$$ 1 - E[max_{j} Pr(Y=j|X)] $$
+
+Where $max_{j}$ is the value of $j$ which maximizes $Pr(...)$. The expectation is the average over all possible values of $X$. This error measure can be read as the error when all observations (all values of $X$) are assigned to their highest probability class which, if we knew the conditional distribution $Pr(Y|X)$, would be exactly the error we would obtain when using the Bayes classifier and since the Bayes classifier is ideal so to is the error (it is irreducible).
